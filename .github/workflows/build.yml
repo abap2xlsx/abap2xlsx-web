@@ -20,7 +20,7 @@ jobs:
     - uses: actions/setup-node@v4
     - run: |
         npm install
-        npm run build
+        npm test
     - uses: actions/configure-pages@v5
     - uses: actions/upload-pages-artifact@v3
       with:

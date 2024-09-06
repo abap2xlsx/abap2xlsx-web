@@ -21,18 +21,25 @@ import {ABAP, MemoryConsole} from "@abaplint/runtime";
 import * as abaplint from "@abaplint/core";
 import * as abapMonaco from "@abaplint/monaco";
 import Split from "split-grid";
-import { zcl_excel_demo1 } from "./abap";
+import { abapfiles } from "./abap";
 
+const top = "zcl_excel_demo1.clas.abap";
 const reg = new abaplint.Registry(new abaplint.Config(JSON.stringify(config)));
+for (const filename in abapfiles) {
+  if (filename === top) {
+    continue;
+  }
+  reg.addFile(new abaplint.MemoryFile(filename, abapfiles[filename]));
+}
 abapMonaco.registerABAP(reg);
 
-const filename = "file:///zcl_demo.clas.abap";
+const filename = "file:///" + top;
 const model1 = monaco.editor.createModel(
-  zcl_excel_demo1,
+  abapfiles[top],
   "abap",
   monaco.Uri.parse(filename),
 );
-reg.addFile(new abaplint.MemoryFile(filename, ""));
+reg.addFile(new abaplint.MemoryFile(filename, abapfiles[top]));
 
 Split({
   columnGutters: [
@@ -88,7 +95,7 @@ async function abapChanged() {
     reg.parse();
     abapMonaco.updateMarkers(reg, model1);
 
-    const res = await new Transpiler().runRaw([{filename, contents}]);
+    // const res = await new Transpiler().runRaw([{filename, contents}]);
   } catch (error) {
     console.dir(error);
   }
