@@ -95,7 +95,7 @@ async function abapChanged() {
     reg.parse();
     abapMonaco.updateMarkers(reg, model1);
 
-    const res = await new Transpiler().runRaw([{filename, contents}]);
+    // const res = await new Transpiler().runRaw([{filename, contents}]);
   } catch (error) {
     console.dir(error);
   }
