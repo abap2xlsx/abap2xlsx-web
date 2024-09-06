@@ -2,12 +2,14 @@ body, html, .inner, .outer {
   height: 100%;
   margin: 0;
   background-color: #333;
+  font-family: sans-serif;
+  color: white;
   overflow: hidden;
 }
 
 #horizon {
   display: grid;
-  grid-template-columns: 1fr 5px 1fr 5px 1fr;
+  grid-template-columns: 1fr 5px 1fr;
   grid-template-rows: 1fr;
 
   position: absolute;

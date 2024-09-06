@@ -40,7 +40,7 @@ Split({
       element: document.getElementById("gutter1"),
     },
     {
-      track: 3,
+      track: 2,
       element: document.getElementById("gutter2"),
     },
   ],
