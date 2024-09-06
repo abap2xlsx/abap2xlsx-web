@@ -21,14 +21,14 @@ import {ABAP, MemoryConsole} from "@abaplint/runtime";
 import * as abaplint from "@abaplint/core";
 import * as abapMonaco from "@abaplint/monaco";
 import Split from "split-grid";
-import { zcl_excel_demo1 } from "./abap";
+import { abapfiles } from "./abap";
 
 const reg = new abaplint.Registry(new abaplint.Config(JSON.stringify(config)));
 abapMonaco.registerABAP(reg);
 
 const filename = "file:///zcl_demo.clas.abap";
 const model1 = monaco.editor.createModel(
-  zcl_excel_demo1,
+  abapfiles["zcl_excel_demo1.clas.abap"],
   "abap",
   monaco.Uri.parse(filename),
 );
