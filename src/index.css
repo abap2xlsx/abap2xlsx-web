@@ -38,3 +38,9 @@ body, html, .inner, .outer {
 select {
   width: 100%;
 }
+
+iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
