@@ -3,7 +3,14 @@ import * as path from "node:path";
 
 console.log("Building abap.js");
 
-const abapfiles = {};
+let output = "export const abapfiles = {\n";
+
+function escape(input) {
+  if (input.charCodeAt(0) === 0xFEFF) {
+    input = input.substr(1);
+  }
+  return input.replaceAll("`", "\\`").replaceAll("${", "\\${").trimEnd();
+}
 
 /////////////////////////////////////////
 
@@ -12,18 +19,19 @@ for (const dirent of fs.readdirSync("open-abap-core/src", {recursive: true, with
     continue;
   }
   const contents = fs.readFileSync(path.join(dirent.parentPath, dirent.name)).toString();
-  abapfiles[dirent.name] = contents.trimEnd();
+  output += `"${dirent.name}": \`${escape(contents)}\`,\n`;
 }
 
 /////////////////////////////////////////
 
 {
-  const contents = fs.readFileSync("abap2xlsx-demos/src/zcl_excel_demo1.clas.abap").toString();
-  abapfiles["zcl_excel_demo1.clas.abap"] = contents.trimEnd();
+  const contents = fs.readFileSync("abap2xlsx-demos/src/zcl_excel_demo1.clas.abap", "utf-8").toString("utf-8");
+  output += `"zcl_excel_demo1.clas.abap": \`${escape(contents)}\`,\n`;
 }
+
 {
   const contents = fs.readFileSync("abap2xlsx-demos/src/zif_excel_demo_output.intf.abap").toString();
-  abapfiles["zif_excel_demo_output.intf.abap"] = contents.trimEnd();
+  output += `"zif_excel_demo_output.intf.abap": \`${escape(contents)}\`,\n`;
 }
 
 /////////////////////////////////////////
@@ -37,15 +45,9 @@ for (const dirent of fs.readdirSync("abap2xlsx/src", {recursive: true, withFileT
     continue;
   }
   const contents = fs.readFileSync(path.join(dirent.parentPath, dirent.name)).toString();
-  abapfiles[dirent.name] = contents.trimEnd();
+  output += `"${dirent.name}": \`${escape(contents)}\`,\n`;
 }
 
 /////////////////////////////////////////
 
-for (const key in abapfiles) {
-  if (abapfiles[key].charCodeAt(0) === 0xFEFF) {
-    abapfiles[key] = abapfiles[key].substr(1);
-  }
-}
-
-fs.writeFileSync("src/abap.ts", `export const abapfiles = ${JSON.stringify(abapfiles, null, 2)};`);
+fs.writeFileSync("src/abap.ts", output + "\n};");

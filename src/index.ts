@@ -26,9 +26,7 @@ import { abapfiles } from "./abap";
 const reg = new abaplint.Registry(new abaplint.Config(JSON.stringify(config)));
 abapMonaco.registerABAP(reg);
 
-console.dir(abapfiles["zcl_excel_demo1.clas.abap"]);
-
-const filename = "file:///zcl_demo.clas.abap";
+const filename = "file:///zcl_excel_demo1.clas.abap";
 const model1 = monaco.editor.createModel(
   abapfiles["zcl_excel_demo1.clas.abap"],
   "abap",
