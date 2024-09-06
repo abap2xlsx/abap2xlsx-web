@@ -95,7 +95,25 @@ async function abapChanged() {
     reg.parse();
     abapMonaco.updateMarkers(reg, model1);
 
-    // const res = await new Transpiler().runRaw([{filename, contents}]);
+    if (contents === abapfiles[top]) {
+      document.getElementById("container2").innerHTML = `<iframe src="https://view.officeapps.live.com/op/view.aspx?src=https://abap2xlsx.github.io/abap2xlsx-web/demo1.xlsx" title="Excel"></iframe>`;
+
+      setTimeout(() => monaco.editor.getEditors()[0].focus(), 1000);
+    } else {
+      const markers = monaco.editor.getModelMarkers({});
+      if (markers.length > 0) {
+        let text = "<u><b>Code Issues</b></u><br>";
+        for (const marker of markers) {
+          text += marker.message + "<br>";
+        }
+        document.getElementById("container2").innerHTML = text;
+        return;
+      }
+
+      document.getElementById("container2").innerHTML = `todo, compiling`;
+
+      // const res = await new Transpiler().runRaw([{filename, contents}]);
+    }
   } catch (error) {
     console.dir(error);
   }
