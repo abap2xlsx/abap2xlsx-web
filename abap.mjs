@@ -25,7 +25,7 @@ for (const dirent of fs.readdirSync("open-abap-core/src", {recursive: true, with
 /////////////////////////////////////////
 
 {
-  const contents = fs.readFileSync("abap2xlsx-demos/src/zcl_excel_demo1.clas.abap", "utf-8").toString("utf-8");
+  const contents = fs.readFileSync("abap2xlsx-demos/src/demo001/zcl_excel_demo1.clas.abap", "utf-8").toString("utf-8");
   output += `"zcl_excel_demo1.clas.abap": \`${escape(contents)}\`,\n`;
 }
 
