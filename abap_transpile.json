@@ -1,0 +1,15 @@
+{
+  "input_folder": "input",
+  "input_filter": [],
+  "output_folder": "output",
+  "libs": [],
+  "write_unit_tests": false,
+  "write_source_map": false,
+  "options": {
+    "ignoreSyntaxCheck": false,
+    "addFilenames": true,
+    "addCommonJS": true,
+    "unknownTypes": "runtimeError",
+    "skip": []
+  }
+}

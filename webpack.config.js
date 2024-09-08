@@ -77,7 +77,7 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: "./public/demo1.xlsx", to: "demo1.xlsx" },
+        { from: "./public/*.xlsx", to: "[name].xlsx" },
       ],
     }),
   ],

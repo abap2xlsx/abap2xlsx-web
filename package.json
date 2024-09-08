@@ -10,14 +10,16 @@
     "clone": "npm run clone1 && npm run clone2 && npm run clone3",
     "dev": "webpack serve --mode development --env development",
     "webpack": "webpack",
-    "test": "npm run clone && node abap.mjs && npm run webpack"
+    "transpile": "abap_transpile abap_transpile.json",
+    "test": "npm run clone && rm -rf input && mkdir input && node abap.mjs && npm run transpile && node examples.mjs && npm run webpack"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "@abaplint/monaco": "^2.113.6",
-    "@abaplint/runtime": "^2.10.15",
-    "@abaplint/transpiler": "^2.10.15",
+    "@abaplint/runtime": "^2.10.16",
+    "@abaplint/transpiler": "^2.10.16",
+    "@abaplint/transpiler-cli": "^2.10.16",
     "buffer": "^6.0.3",
     "copy-webpack-plugin": "^12.0.2",
     "crypto-browserify": "^3.12.0",

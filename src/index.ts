@@ -2,12 +2,14 @@
 global.MonacoEnvironment = {
   globalAPI: true,
   getWorkerUrl: function (_moduleId: any, label: any) {
+    /*
     if (label === "json") {
       return "./json.worker.bundle.js";
     }
     if (label === "typescript" || label === "javascript") {
       return "./ts.worker.bundle.js";
     }
+    */
     return "./editor.worker.bundle.js";
   },
 };
@@ -96,7 +98,7 @@ async function abapChanged() {
     abapMonaco.updateMarkers(reg, model1);
 
     if (contents === abapfiles[top]) {
-      document.getElementById("container2").innerHTML = `<iframe src="https://view.officeapps.live.com/op/view.aspx?src=https://abap2xlsx.github.io/abap2xlsx-web/demo1.xlsx" title="Excel"></iframe>`;
+      document.getElementById("container2").innerHTML = `<iframe src="https://view.officeapps.live.com/op/view.aspx?src=https://abap2xlsx.github.io/abap2xlsx-web/zcl_excel_demo1.xlsx" title="Excel"></iframe>`;
 
       setTimeout(() => monaco.editor.getEditors()[0].focus(), 1000);
     } else {

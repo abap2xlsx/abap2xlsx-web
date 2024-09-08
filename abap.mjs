@@ -1,15 +1,21 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 
-console.log("Building abap.js");
+console.log("Running abap.mjs");
 
 let output = "export const abapfiles = {\n";
+let files = {};
 
 function escape(input) {
   if (input.charCodeAt(0) === 0xFEFF) {
     input = input.substr(1);
   }
   return input.replaceAll("`", "\\`").replaceAll("${", "\\${").trimEnd();
+}
+
+function add(name, contents) {
+  output += `"${name}": \`${escape(contents)}\`,\n`;
+  files[name] = contents;
 }
 
 /////////////////////////////////////////
@@ -19,19 +25,19 @@ for (const dirent of fs.readdirSync("open-abap-core/src", {recursive: true, with
     continue;
   }
   const contents = fs.readFileSync(path.join(dirent.parentPath, dirent.name)).toString();
-  output += `"${dirent.name}": \`${escape(contents)}\`,\n`;
+  add(dirent.name, contents);
 }
 
 /////////////////////////////////////////
 
 {
-  const contents = fs.readFileSync("abap2xlsx-demos/src/zcl_excel_demo1.clas.abap", "utf-8").toString("utf-8");
-  output += `"zcl_excel_demo1.clas.abap": \`${escape(contents)}\`,\n`;
+  const contents = fs.readFileSync("abap2xlsx-demos/src/demo001/zcl_excel_demo1.clas.abap", "utf-8").toString("utf-8");
+  add("zcl_excel_demo1.clas.abap", contents);
 }
 
 {
   const contents = fs.readFileSync("abap2xlsx-demos/src/zif_excel_demo_output.intf.abap").toString();
-  output += `"zif_excel_demo_output.intf.abap": \`${escape(contents)}\`,\n`;
+  add("zif_excel_demo_output.intf.abap", contents);
 }
 
 /////////////////////////////////////////
@@ -45,9 +51,12 @@ for (const dirent of fs.readdirSync("abap2xlsx/src", {recursive: true, withFileT
     continue;
   }
   const contents = fs.readFileSync(path.join(dirent.parentPath, dirent.name)).toString();
-  output += `"${dirent.name}": \`${escape(contents)}\`,\n`;
+  add(dirent.name, contents);
 }
 
 /////////////////////////////////////////
 
 fs.writeFileSync("src/abap.ts", output + "\n};");
+for (const filename in files) {
+  fs.writeFileSync(path.join("input", filename), files[filename]);
+}
