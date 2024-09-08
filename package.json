@@ -11,7 +11,7 @@
     "dev": "webpack serve --mode development --env development",
     "webpack": "webpack",
     "transpile": "abap_transpile abap_transpile.json",
-    "test": "npm run clone && rm -rf input && mkdir input && node abap.mjs && npm run transpile && npm run webpack"
+    "test": "npm run clone && rm -rf input && mkdir input && node abap.mjs && npm run transpile && node examples.mjs && npm run webpack"
   },
   "author": "",
   "license": "MIT",
