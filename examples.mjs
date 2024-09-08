@@ -4,11 +4,18 @@ await initializeABAP();
 
 console.log("Running examples.mjs");
 
-const excel = await abap.Classes["ZCL_EXCEL_DEMO1"].zif_excel_demo_output$run();
+for (let i = 1; i < 10; i++) {
+  const className = "ZCL_EXCEL_DEMO" + i;
+  if (abap.Classes[className] === undefined) {
+    break;
+  }
 
-const writer = new abap.Classes["ZCL_EXCEL_WRITER_2007"]();
-await writer.constructor_();
+  const excel = await abap.Classes[className].zif_excel_demo_output$run();
 
-const xstring = await writer.zif_excel_writer$write_file({io_excel: excel});
+  const writer = new abap.Classes["ZCL_EXCEL_WRITER_2007"]();
+  await writer.constructor_();
 
-fs.writeFileSync("public/zcl_excel_demo1.xlsx", Buffer.from(xstring.get(), "hex"));
+  const xstring = await writer.zif_excel_writer$write_file({io_excel: excel});
+
+  fs.writeFileSync("public/zcl_excel_demo" + i + ".xlsx", Buffer.from(xstring.get(), "hex"));
+}
