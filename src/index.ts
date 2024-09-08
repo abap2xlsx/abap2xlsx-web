@@ -28,6 +28,9 @@ import { abapfiles } from "./abap";
 const top = "zcl_excel_demo1.clas.abap";
 const reg = new abaplint.Registry(new abaplint.Config(JSON.stringify(config)));
 for (const filename in abapfiles) {
+  if (filename.indexOf("zcl_excel_demo") === 0) {
+    document.getElementById("demoDropdown").innerHTML += `<option value="${filename}">${filename}</option>\n`;
+  }
   if (filename === top) {
     continue;
   }
@@ -84,6 +87,14 @@ observer.observe(document.getElementById("horizon"), {
 });
 
 window.addEventListener("resize", updateEditorLayouts);
+
+document.getElementById("revertButton").addEventListener("click", () => {
+  alert("todo");
+});
+
+document.getElementById("demoDropdown").addEventListener("change", () => {
+  alert("todo");
+});
 
 // see https://github.com/SimulatedGREG/electron-vue/issues/777
 // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AsyncFunction
