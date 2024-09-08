@@ -4,6 +4,7 @@ import * as path from "node:path";
 console.log("Building abap.js");
 
 let output = "export const abapfiles = {\n";
+let files = {};
 
 function escape(input) {
   if (input.charCodeAt(0) === 0xFEFF) {
@@ -14,6 +15,7 @@ function escape(input) {
 
 function add(name, contents) {
   output += `"${name}": \`${escape(contents)}\`,\n`;
+  files[name] = contents;
 }
 
 /////////////////////////////////////////
@@ -55,3 +57,6 @@ for (const dirent of fs.readdirSync("abap2xlsx/src", {recursive: true, withFileT
 /////////////////////////////////////////
 
 fs.writeFileSync("src/abap.ts", output + "\n};");
+for (const filename in files) {
+  fs.writeFileSync(path.join("input", filename), files[filename]);
+}

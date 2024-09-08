@@ -4,3 +4,5 @@ abap2xlsx
 abap2xlsx-demos
 open-abap-core
 src/abap.ts
+input
+output
