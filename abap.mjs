@@ -1,7 +1,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 
-console.log("Building abap.js");
+console.log("Running abap.mjs");
 
 let output = "export const abapfiles = {\n";
 let files = {};
