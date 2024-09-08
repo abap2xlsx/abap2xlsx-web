@@ -25,17 +25,19 @@ import * as abapMonaco from "@abaplint/monaco";
 import Split from "split-grid";
 import { abapfiles } from "./abap";
 
-const top = "zcl_excel_demo1.clas.abap";
 const reg = new abaplint.Registry(new abaplint.Config(JSON.stringify(config)));
 for (const filename in abapfiles) {
-  if (filename === top) {
+  if (filename.indexOf("zcl_excel_demo") === 0) {
+    document.getElementById("demoDropdown").innerHTML += `<option value="${filename}">${filename}</option>\n`;
     continue;
   }
   reg.addFile(new abaplint.MemoryFile(filename, abapfiles[filename]));
 }
 abapMonaco.registerABAP(reg);
 
-const filename = "file:///" + top;
+let top = "zcl_excel_demo1.clas.abap";
+const filename = "file:///zcl_demo.clas.abap";
+
 const model1 = monaco.editor.createModel(
   abapfiles[top],
   "abap",
@@ -85,6 +87,21 @@ observer.observe(document.getElementById("horizon"), {
 
 window.addEventListener("resize", updateEditorLayouts);
 
+document.getElementById("revertButton").addEventListener("click", () => {
+  reg.updateFile(new abaplint.MemoryFile(filename, abapfiles[top]));
+  model1.setValue(abapfiles[top]);
+  abapChanged();
+});
+
+document.getElementById("demoDropdown").addEventListener("change", (e) => {
+  // @ts-ignore
+  top = document.getElementById("demoDropdown").value;
+
+  reg.updateFile(new abaplint.MemoryFile(filename, abapfiles[top]));
+  model1.setValue(abapfiles[top]);
+  abapChanged();
+});
+
 // see https://github.com/SimulatedGREG/electron-vue/issues/777
 // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AsyncFunction
 const AsyncFunction = new Function(`return Object.getPrototypeOf(async function(){}).constructor`)();
@@ -98,7 +115,8 @@ async function abapChanged() {
     abapMonaco.updateMarkers(reg, model1);
 
     if (contents === abapfiles[top]) {
-      document.getElementById("container2").innerHTML = `<iframe src="https://view.officeapps.live.com/op/view.aspx?src=https://abap2xlsx.github.io/abap2xlsx-web/zcl_excel_demo1.xlsx" title="Excel"></iframe>`;
+      const name = top.split(".")[0];
+      document.getElementById("container2").innerHTML = `<iframe src="https://view.officeapps.live.com/op/view.aspx?src=https://abap2xlsx.github.io/abap2xlsx-web/${name}.xlsx" title="Excel"></iframe>`;
 
       setTimeout(() => monaco.editor.getEditors()[0].focus(), 1000);
     } else {
