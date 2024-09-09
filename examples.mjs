@@ -7,7 +7,7 @@ console.log("Running examples.mjs");
 for (let i = 1; i < 10; i++) {
   const className = "ZCL_EXCEL_DEMO" + i;
   if (abap.Classes[className] === undefined) {
-    break;
+    continue;
   }
 
   const excel = await abap.Classes[className].zif_excel_demo_output$run();
