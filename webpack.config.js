@@ -10,8 +10,10 @@ module.exports = {
   entry: {
     app: "./src/index.ts",
     "editor.worker": "monaco-editor/esm/vs/editor/editor.worker.js",
+    /*
     "json.worker": "monaco-editor/esm/vs/language/json/json.worker",
     "ts.worker": "monaco-editor/esm/vs/language/typescript/ts.worker",
+    */
   },
   devServer: {
     open: true,
@@ -19,6 +21,7 @@ module.exports = {
   },
   resolve: {
     fallback: {
+      "./%23ui2%23cl_json.clas.mjs": false,
       "buffer": require.resolve("buffer/"),
       "stream": require.resolve("stream-browserify"),
       "crypto": false,
@@ -27,11 +30,13 @@ module.exports = {
       "http": false,
       "https": false,
       "zlib": false,
+      "tls": false,
+      "net": false,
       "util": false,
       "url": false,
       "string_decoder": require.resolve("string_decoder/"),
     },
-    extensions: [".ts", ".js"],
+    extensions: [".ts", ".js", ".mjs"],
   },
   output: {
     globalObject: "self",

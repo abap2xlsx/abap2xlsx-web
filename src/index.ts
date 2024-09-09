@@ -1,7 +1,7 @@
 // @ts-ignore
 global.MonacoEnvironment = {
   globalAPI: true,
-  getWorkerUrl: function (_moduleId: any, label: any) {
+  getWorkerUrl: function (_moduleId, label) {
     /*
     if (label === "json") {
       return "./json.worker.bundle.js";
@@ -23,7 +23,9 @@ import {ABAP, MemoryConsole} from "@abaplint/runtime";
 import * as abaplint from "@abaplint/core";
 import * as abapMonaco from "@abaplint/monaco";
 import Split from "split-grid";
-import { abapfiles } from "./abap";
+import { abapfiles } from "./abap.js";
+import {initializeABAP} from "../output/init.mjs";
+//initializeABAP();
 
 const reg = new abaplint.Registry(new abaplint.Config(JSON.stringify(config)));
 for (const filename in abapfiles) {
