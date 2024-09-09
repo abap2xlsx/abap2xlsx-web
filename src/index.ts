@@ -108,6 +108,25 @@ document.getElementById("demoDropdown").addEventListener("change", (e) => {
 // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AsyncFunction
 const AsyncFunction = new Function(`return Object.getPrototypeOf(async function(){}).constructor`)();
 
+async function sanitizeAndRun(js: string) {
+  let lines = js.split("\n");
+  lines = lines.filter(row => row.includes("await import") === false);
+  lines = lines.filter(row => row.includes("export {") === false);
+  js = lines.join("\n");
+  js += `
+const excel = await abap.Classes["ZCL_EXCEL_DEMO1"].zif_excel_demo_output$run();
+const writer = new abap.Classes["ZCL_EXCEL_WRITER_2007"]();
+await writer.constructor_();
+const xstring = await writer.zif_excel_writer$write_file({io_excel: excel});
+return xstring;
+  `;
+  console.dir(js);
+
+  const f = new AsyncFunction("abap", js);
+  const res = await f(globalThis.abap);
+  console.dir(res);
+}
+
 async function abapChanged() {
   // @ts-ignore
   console.dir(globalThis.abap);
@@ -143,22 +162,6 @@ async function abapChanged() {
   }
 
   try {
-    /*
-    const raw = [];
-    for (const filename in abapfiles) {
-      if (filename.indexOf("zcl_excel_demo") === 0) {
-        continue;
-      }
-      raw.push({
-        filename: filename,
-        contents: abapfiles[filename],
-      })
-      if (filename === "cl_ixml.clas.locals_imp.abap") {
-        console.log(abapfiles[filename]);
-      }
-    }
-      */
-//    console.dir(raw);
     const options: ITranspilerOptions = {
       "ignoreSyntaxCheck": false,
       "addFilenames": true,
@@ -166,11 +169,12 @@ async function abapChanged() {
       "skipReposrc": true,
       "unknownTypes": UnknownTypesEnum.runtimeError,
     }
-    const res = await new Transpiler(options).run(reg);
-    console.dir("RESULT:");
-    console.dir(res);
+    const result = await new Transpiler(options).run(reg);
+    document.getElementById("container2").innerHTML = `<b>Compiling Done</b>`;
+    const compiled = result.objects.find(o => o.filename.includes("zcl_demo.clas.mjs"))?.chunk.getCode();
+    await sanitizeAndRun(compiled);
   } catch (error) {
-    document.getElementById("container2").innerHTML = `<u><b>Issues found during compilation</b></u><br>`;
+    document.getElementById("container2").innerHTML = `<u><b>Issues found during compilation or execution</b></u><br>`;
     document.getElementById("container2").innerHTML += error.toString();
   }
 }
