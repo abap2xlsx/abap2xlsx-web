@@ -33,6 +33,7 @@ module.exports = {
       "fs": false,
       "http": false,
       "https": false,
+      "process": require.resolve("process"),
       "zlib": require.resolve("browserify-zlib"),
       "tls": false,
       "net": false,

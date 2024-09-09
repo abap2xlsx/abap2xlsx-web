@@ -125,6 +125,12 @@ return xstring;
   const f = new AsyncFunction("abap", js);
   const res = await f(globalThis.abap);
   console.dir(res);
+/*
+  var file = document.createElement('a');
+  file.setAttribute('href', 'data:text/plain;charset=utf-8,world');
+  file.setAttribute('download', "foo.xlsx");
+  document.getElementById("container2").innerHTML += file.innerHTML;
+  */
 }
 
 async function abapChanged() {
