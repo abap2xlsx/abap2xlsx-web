@@ -25,6 +25,7 @@ import * as abapMonaco from "@abaplint/monaco";
 import Split from "split-grid";
 import { abapfiles } from "./abap.js";
 import * as initabap from "../output/init.mjs";
+import {Buffer} from "buffer";
 console.dir(initabap); // just to make sure its not shaked away
 
 const reg = new abaplint.Registry(new abaplint.Config(JSON.stringify(config)));
@@ -125,12 +126,12 @@ return xstring;
   const f = new AsyncFunction("abap", js);
   const res = await f(globalThis.abap);
   console.dir(res);
-/*
+
   var file = document.createElement('a');
-  file.setAttribute('href', 'data:text/plain;charset=utf-8,world');
+  file.setAttribute('href', 'data:application/octet-stream;base64,' + Buffer.from(res.get(), "hex").toString("base64"));
   file.setAttribute('download', "foo.xlsx");
-  document.getElementById("container2").innerHTML += file.innerHTML;
-  */
+  file.innerText = "Download, " + (res.get().length / 2) + " bytes";
+  document.getElementById("container2").appendChild(file);
 }
 
 async function abapChanged() {
@@ -176,7 +177,7 @@ async function abapChanged() {
       "unknownTypes": UnknownTypesEnum.runtimeError,
     }
     const result = await new Transpiler(options).run(reg);
-    document.getElementById("container2").innerHTML = `<b>Compiling Done</b>`;
+    document.getElementById("container2").innerHTML = `<b>Compiling Done</b><br><br>`;
     const compiled = result.objects.find(o => o.filename.includes("zcl_demo.clas.mjs"))?.chunk.getCode();
     await sanitizeAndRun(compiled);
   } catch (error) {
