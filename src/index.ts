@@ -134,14 +134,21 @@ return xstring;
   document.getElementById("container2").appendChild(file);
 }
 
+let tid = 0;
 async function abapChanged() {
+  clearTimeout(tid);
+  tid = setTimeout(async () => updateEverything(), 800);
+}
+
+async function updateEverything() {
   // @ts-ignore
   console.dir(globalThis.abap);
   const contents = editor1.getValue();
 
+  const file = new abaplint.MemoryFile(filename, contents);
+  reg.updateFile(file);
+
   try {
-    const file = new abaplint.MemoryFile(filename, contents);
-    reg.updateFile(file);
     reg.parse();
     abapMonaco.updateMarkers(reg, model1);
 
