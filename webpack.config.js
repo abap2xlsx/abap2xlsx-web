@@ -26,7 +26,7 @@ module.exports = {
     fallback: {
       "./%23ui2%23cl_json.clas.mjs": false,
       "buffer": require.resolve("buffer/"),
-      "assert": require.resolve("assert/"),
+      "assert": false,
       "stream": require.resolve("stream-browserify"),
       "crypto": false,
       "path": require.resolve("path-browserify"),
@@ -83,6 +83,7 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       Buffer: ["buffer", "Buffer"],
+      process: 'process/browser',
     }),
     new CopyPlugin({
       patterns: [

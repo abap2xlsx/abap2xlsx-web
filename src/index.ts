@@ -120,7 +120,7 @@ await writer.constructor_();
 const xstring = await writer.zif_excel_writer$write_file({io_excel: excel});
 return xstring;
   `;
-  console.dir(js);
+//  console.dir(js);
 
   const f = new AsyncFunction("abap", js);
   const res = await f(globalThis.abap);
@@ -175,6 +175,7 @@ async function abapChanged() {
     await sanitizeAndRun(compiled);
   } catch (error) {
     document.getElementById("container2").innerHTML = `<u><b>Issues found during compilation or execution</b></u><br>`;
+    console.dir(error);
     document.getElementById("container2").innerHTML += error.toString();
   }
 }
