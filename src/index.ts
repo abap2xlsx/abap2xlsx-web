@@ -129,7 +129,7 @@ return xstring;
 
   var file = document.createElement('a');
   file.setAttribute('href', 'data:application/octet-stream;base64,' + Buffer.from(res.get(), "hex").toString("base64"));
-  file.setAttribute('download', "foo.xlsx");
+  file.setAttribute('download', "abap2xlsx " + new Date().toISOString() + ".xlsx");
   file.innerText = "Download, " + (res.get().length / 2) + " bytes";
   document.getElementById("container2").appendChild(file);
 }
