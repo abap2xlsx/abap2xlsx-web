@@ -10,7 +10,9 @@ function escape(input) {
   if (input.charCodeAt(0) === 0xFEFF) {
     input = input.substr(1);
   }
-  return input.replaceAll("`", "\\`").replaceAll("${", "\\${").trimEnd();
+  return input.replaceAll("\\", "\\\\")
+    .replaceAll("`", "\\`")
+    .replaceAll("${", "\\${").trimEnd();
 }
 
 function add(name, contents) {
@@ -60,7 +62,7 @@ for (const dirent of fs.readdirSync("abap2xlsx/src", {recursive: true, withFileT
 
 /////////////////////////////////////////
 
-fs.writeFileSync("src/abap.ts", output + "\n};");
+fs.writeFileSync("src/abap.js", output + "\n};");
 for (const filename in files) {
   fs.writeFileSync(path.join("input", filename), files[filename]);
 }

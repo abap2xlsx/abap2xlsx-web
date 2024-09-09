@@ -7,6 +7,10 @@ body, html, .inner, .outer {
   overflow: hidden;
 }
 
+a {
+  color: white;
+}
+
 #horizon {
   display: grid;
   grid-template-columns: 1fr 5px 1fr;
