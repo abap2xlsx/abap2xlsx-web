@@ -24,8 +24,8 @@ import * as abaplint from "@abaplint/core";
 import * as abapMonaco from "@abaplint/monaco";
 import Split from "split-grid";
 import { abapfiles } from "./abap.js";
-import {initializeABAP} from "../output/init.mjs";
-//initializeABAP();
+import * as initabap from "../output/init.mjs";
+console.dir(initabap); // just to make sure its not shaked away
 
 const reg = new abaplint.Registry(new abaplint.Config(JSON.stringify(config)));
 for (const filename in abapfiles) {
@@ -109,6 +109,9 @@ document.getElementById("demoDropdown").addEventListener("change", (e) => {
 const AsyncFunction = new Function(`return Object.getPrototypeOf(async function(){}).constructor`)();
 
 async function abapChanged() {
+  // @ts-ignore
+  console.dir(globalThis.abap);
+
   try {
     const contents = editor1.getValue();
     const file = new abaplint.MemoryFile(filename, contents);
@@ -144,4 +147,5 @@ async function abapChanged() {
 editor1.onDidChangeModelContent(abapChanged);
 abapChanged();
 editor1.focus();
-const abap = new ABAP({console: new MemoryConsole()});
+
+//const abap = new ABAP({console: new MemoryConsole()});

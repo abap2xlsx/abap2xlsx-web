@@ -15,6 +15,9 @@ module.exports = {
     "ts.worker": "monaco-editor/esm/vs/language/typescript/ts.worker",
     */
   },
+  experiments: {
+    topLevelAwait: true
+  },
   devServer: {
     open: true,
     hot: true,

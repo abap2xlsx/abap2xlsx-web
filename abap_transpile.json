@@ -9,6 +9,7 @@
     "ignoreSyntaxCheck": false,
     "addFilenames": true,
     "addCommonJS": true,
+    "skipReposrc": true,
     "unknownTypes": "runtimeError",
     "skip": []
   }

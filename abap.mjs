@@ -60,7 +60,7 @@ for (const dirent of fs.readdirSync("abap2xlsx/src", {recursive: true, withFileT
 
 /////////////////////////////////////////
 
-fs.writeFileSync("src/abap.ts", output + "\n};");
+fs.writeFileSync("src/abap.js", output + "\n};");
 for (const filename in files) {
   fs.writeFileSync(path.join("input", filename), files[filename]);
 }
