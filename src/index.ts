@@ -24,9 +24,9 @@ import * as abaplint from "@abaplint/core";
 import * as abapMonaco from "@abaplint/monaco";
 import Split from "split-grid";
 import { abapfiles } from "./abap.js";
-import * as initabap from "../output/init.mjs";
+import "../output/_init.mjs";
 import {Buffer} from "buffer";
-console.dir(initabap); // just to make sure its not shaked away
+// console.dir(initabap); // just to make sure its not shaked away
 
 const reg = new abaplint.Registry(new abaplint.Config(JSON.stringify(config)));
 for (const filename in abapfiles) {
