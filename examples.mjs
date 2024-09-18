@@ -4,7 +4,7 @@ await initializeABAP();
 
 console.log("Running examples.mjs");
 
-for (let i = 1; i < 10; i++) {
+for (let i = 1; i < 99; i++) {
   const className = "ZCL_EXCEL_DEMO" + i;
   if (abap.Classes[className] === undefined) {
     continue;
