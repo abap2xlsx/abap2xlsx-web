@@ -32,9 +32,17 @@ for (const dirent of fs.readdirSync("open-abap-core/src", {recursive: true, with
 
 /////////////////////////////////////////
 
-for (let i = 1; i < 10; i++) {
+for (let i = 1; i < 99; i++) {
+  let prefixed = i + "";
+  if (prefixed.length < 3) {
+    prefixed = "0" + prefixed;
+  }
+  if (prefixed.length < 3) {
+    prefixed = "0" + prefixed;
+  }
+  const filename = "abap2xlsx-demos/src/demo" + prefixed + "/zcl_excel_demo" + i + ".clas.abap";
   try {
-    const contents = fs.readFileSync("abap2xlsx-demos/src/demo00" + i + "/zcl_excel_demo" + i + ".clas.abap", "utf-8").toString("utf-8");
+    const contents = fs.readFileSync(filename, "utf-8").toString("utf-8");
     add("zcl_excel_demo" + i + ".clas.abap", contents);
   } catch {
     continue;

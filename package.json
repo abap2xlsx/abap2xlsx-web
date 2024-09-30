@@ -16,10 +16,10 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@abaplint/monaco": "^2.113.8",
-    "@abaplint/runtime": "^2.10.18",
-    "@abaplint/transpiler": "^2.10.18",
-    "@abaplint/transpiler-cli": "^2.10.18",
+    "@abaplint/monaco": "^2.113.17",
+    "@abaplint/runtime": "^2.10.20",
+    "@abaplint/transpiler": "^2.10.20",
+    "@abaplint/transpiler-cli": "^2.10.20",
     "assert": "^2.1.0",
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
@@ -28,7 +28,7 @@
     "css-loader": "^7.1.2",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.6.0",
-    "monaco-editor": "^0.51.0",
+    "monaco-editor": "^0.52.0",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
     "split-grid": "^1.0.11",
@@ -37,7 +37,7 @@
     "style-loader": "^4.0.0",
     "ts-loader": "^9.5.1",
     "typescript": "^5.6.2",
-    "webpack": "^5.94.0",
+    "webpack": "^5.95.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.1.0"
   }
